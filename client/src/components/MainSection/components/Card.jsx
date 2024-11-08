@@ -6,45 +6,65 @@ const Card = ({ empData, handleEdit, handleReRender }) => {
   const { name, email, mobile, designation, gender, course, image } = empData;
   const [dropDown, setDropdown] = useState(false);
 
+  // Handle delete action
   const handleDelete = async (id) => {
     try {
       const res = await axiosDelete(`/employee/${id}`);
       console.log(res);
       handleReRender();
+      setDropdown(false); // Close the dropdown after deletion
     } catch (err) {
       console.log(err);
     }
   };
 
+  // Toggle dropdown menu
+  const toggleDropdown = (e) => {
+    e.stopPropagation(); // Prevent card click event
+    setDropdown(!dropDown);
+  };
+
   return (
-    <div className="max-w-xs w-full bg-white rounded-lg shadow-lg overflow-hidden h-[400px] flex flex-col">
+    <div className="max-w-xs w-full bg-white rounded-lg shadow-lg overflow-hidden h-[400px] flex flex-col relative">
       <div className="relative flex-grow">
+        {/* Three dots icon */}
         <div
           className="absolute top-2 right-2 cursor-pointer"
-          onClick={() => setDropdown(!dropDown)}
+          onClick={toggleDropdown}
         >
           <BsThreeDotsVertical size={20} />
         </div>
+
+        {/* Dropdown menu */}
         {dropDown && (
           <ul
-            className="absolute right-2 top-10 bg-white shadow-md rounded-lg py-2 w-32 text-sm text-gray-700"
+            className="absolute right-2 top-10 bg-white shadow-md rounded-lg py-2 w-32 text-sm text-gray-700 z-10"
             onMouseLeave={() => setDropdown(false)}
           >
             <li
               className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-              onClick={() => handleEdit(empData._id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleEdit(empData._id);
+                setDropdown(false);
+              }}
             >
               Edit
             </li>
             <li
               className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-              onClick={() => handleDelete(empData._id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDelete(empData._id);
+              }}
             >
               Delete
             </li>
           </ul>
         )}
       </div>
+
+      {/* Employee image and details */}
       <div className="flex justify-center pt-4">
         <img
           src={image}
