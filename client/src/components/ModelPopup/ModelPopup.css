@@ -1,67 +1,91 @@
-.modalContainer{
-    background: rgba(0, 0, 0, 0.6);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+/* Modal container */
+.modalContainer {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100vh;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
-    align-items: center;
     justify-content: center;
-    z-index: 10;
-    transition: 1s ease-in-out;
-}
-.modalBox{
-    width: 40rem;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* Modal box styling */
+  .modalBox {
     background-color: white;
-    border-radius: 10px;
-    overflow: hidden;
-}
-.input-container{
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Modal header (including close button) */
+  .modalHeader {
     display: flex;
     justify-content: space-between;
-    gap: 20px;
-}
-.modalHeader, .modalFooter{
-    background-color: #fcfbfe;
-    height: 5rem;
-    display: grid;
-    place-items: center;
-}
-.modalFooter{
-    margin-top: 15px;
-}
-.modalHeader >h2{
-    font-size: 1.2rem;
-}
-.modalInner{
-    padding: 2rem;
-    
-}
-.input-box{
-   display: flex;
-   flex-direction: column;
-   margin-top: 10px;
-   width: 100%;
-}
-label{
-    font-size: 0.8rem;
-    font-weight: 500;
-    text-transform: uppercase;
-}
-.input-box > input{
-    background-color: transparent;
-  font: inherit;
-  border: none;
-  font-size: 0.9rem;
-  background-color: #ecedf6;
-  padding: 12px;
-  border-radius: 5px;
-  border: 1px solid rgba(0,0,0,.1);
-  margin-top: 10px;
-}
-.input-box > input:focus{
-    outline: none;
-}
+    align-items: center;
+  }
+  
+  .modalHeader h2 {
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  .closeButton {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  /* Form fields styling */
+  .input-box {
+    margin-bottom: 15px;
+  }
+  
+  .input-box label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .input-box input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  /* Modal footer styling */
+  .modalFooter {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  
+  .add-btn {
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .add-btn:disabled {
+    background-color: #ccc;
+  }
+  
+  /* Responsive styling */
+  @media (max-width: 600px) {
+    .modalBox {
+      width: 90%;
+    }
+  }
+  

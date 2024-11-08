@@ -4,10 +4,11 @@ const fs = require('fs');
 const path = require('path');
 
 const createEmployee = async (req, res, next) => {
-    const { firstname, lastname, email, phone, job, dateofjoining } = req.body;
+    const { name, email, mobile, designation, gender, course, dateofjoining } = req.body;
     const avatarLocalPath = req.file?.path;
 
-    if (!firstname || !lastname || !email || !phone || !job || !dateofjoining) {
+    // Check if required fields are provided
+    if (!name || !email || !mobile || !designation || !gender || !course || !dateofjoining) {
         return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -26,18 +27,20 @@ const createEmployee = async (req, res, next) => {
     try {
         // Create new employee with image URL (if available)
         const newEmployee = new Employees({
-            firstname,
-            lastname,
+            name,           // name is now a combined field (firstname, lastname)
             email,
-            phone,
-            job,
+            mobile,
+            designation,
+            gender,
+            course,         // Array field for courses
             dateofjoining,
-            image: imageUrl,  // Store the image URL in the database
+            image: imageUrl, // Store the image URL in the database
         });
 
         await newEmployee.save();  // Save the employee to the database
         return res.status(201).json({ employee: newEmployee, message: "Employee created successfully" });
     } catch (error) {
+        console.error('Error creating employee:', err);
         return res.status(500).json({ message: "Error creating employee", error: error.message });
     }
 };

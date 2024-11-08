@@ -1,35 +1,38 @@
 const mongoose = require('mongoose');
 
 const EmployeeSchema = new mongoose.Schema({
-    firstname: {
+    name: {
         type: String,
         required: true,
-    },
-    lastname: {
-        type: String,
-        required: true,
-        unique: true
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true, 
     },
-    phone: {
+    mobile: {
         type: String,
-        required: true
+        required: true,
     },
-    job: {
+    designation: {
         type: String,
-        required: true
+        enum: ['HR', 'Manager', 'Sales'], 
+        required: true,
     },
-    dateofjoining: {
+    gender: {
         type: String,
-        required: true
+        enum: ['M', 'F'], 
+        required: true,
+    },
+    course: {
+        type: String,
+        enum: ['MCA', 'BCA', 'BSC'], 
+        required: true,
     },
     image: {
         type: String,
-        required: false // Image is optional, but if provided, it will store the Cloudinary URL
-    }
+        required: false, 
+    },
 });
 
 module.exports = mongoose.model("Employee", EmployeeSchema);
