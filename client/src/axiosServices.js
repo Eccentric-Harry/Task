@@ -2,6 +2,11 @@ import axios from 'axios';
 
 const baseURL = `http://localhost:3100`;
 
+const constructUrl = (url) => {
+    // Ensure there's no double slash by trimming leading slash from `url`
+    return `${baseURL}${url.startsWith('/') ? url : `/${url}`}`;
+};
+
 export const axiosGet = (url) => {
     return axios.get(`${baseURL}${url}`, {
         headers: {
@@ -42,3 +47,7 @@ export const generateSignature = (data) => {
         }
     });
 }
+
+export const loginAdmin = (username, password) => {
+    return axios.post(`${baseURL}/admin/login`, { username, password });
+};
