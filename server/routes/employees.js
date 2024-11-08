@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
       image,  // Directly from the frontend
     });
   
-    try {
+    try {   
       await newEmployee.save();
       res.status(201).json({ employee: newEmployee, message: "Employee created successfully" });
     } catch (err) {
