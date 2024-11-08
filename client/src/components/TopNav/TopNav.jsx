@@ -10,7 +10,13 @@ const TopNav = () => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
+        // Remove token and admin data from localStorage
+        localStorage.removeItem('token');
+        localStorage.removeItem('admin');
+
+        // Dispatch logout action
         dispatch(logout());
+        
         navigate('/login');
     };
 

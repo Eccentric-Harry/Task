@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux'; // Added dispatch
 import { Provider } from 'react-redux';
 import { store } from './store';
 import TopNav from './components/TopNav/TopNav';
@@ -10,11 +10,15 @@ import MainSection from './components/MainSection/MainSection';
 import Login from './pages/Login.jsx';
 import ProtectedRoute from './ProtectedRoute';
 import Home from './pages/Home';
+import { login } from './features/authSlice'; // Import login action
+import './index.css'; // or import './styles/tailwind.css';
+
 
 function App() {
     const [employeeId, setEmployeeId] = useState('');
     const [showLeftNav, setShowLeftNav] = useState(false);
     const { isAuthenticated } = useSelector((state) => state.auth); // Get authentication state from redux
+    const dispatch = useDispatch(); // Added dispatch
 
     const handleEmployeeSelect = (id) => {
         setEmployeeId(id);
@@ -23,11 +27,13 @@ function App() {
 
     useEffect(() => {
         // Check if user is authenticated on page load
-        if (localStorage.getItem('token')) {
+        const storedToken = localStorage.getItem('token');
+        if (storedToken) {
             // If there's a token in localStorage, mark the user as authenticated
-            // Optionally, you can dispatch a redux action to set the user state
+            const storedAdmin = JSON.parse(localStorage.getItem('admin')); // Get admin data from localStorage
+            dispatch(login({ admin: storedAdmin, token: storedToken }));
         }
-    }, []);
+    }, [dispatch]); // Added dispatch to dependency array
 
     return (
         <Provider store={store}>

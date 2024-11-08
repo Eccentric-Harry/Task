@@ -14,7 +14,15 @@ const Login = () => {
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:3100/admin/login', { username, password });
-            dispatch(login({ admin: response.data.admin, token: response.data.token }));
+            const { admin, token } = response.data;
+
+            // Save token and admin data to localStorage
+            localStorage.setItem('token', token);
+            localStorage.setItem('admin', JSON.stringify(admin)); // Save admin data as string
+            
+            // Dispatch login action
+            dispatch(login({ admin, token }));
+            
             alert('Login successful');
             navigate('/home');
         } catch (error) {
